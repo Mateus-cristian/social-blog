@@ -9,6 +9,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/material": "^5.11.7",
     "@types/node": "^18.11.18",
     "autoprefixer": "^10.4.13",
     "localforage": "^1.10.0",
