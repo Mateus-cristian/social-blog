@@ -31,7 +31,7 @@ export default function Post() {
                             <p className='font-especial text-lg'>10</p>
                         </div>
                         <div>
-                            <p className='font-especial text-lg'><span className='text-2xl'>1</span> Comentário</p>
+                            <p className='font-especial text-lg'><span className='text-2xl'>0</span> Comentário</p>
                         </div>
                     </div>
                     <div className='pt-4 flex gap-4'>
