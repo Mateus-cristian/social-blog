@@ -36,8 +36,8 @@ const Routes: React.FC = () => {
                         ))}
                     </Switch>
                 </Suspense>
+                <Route component={InexistentRoute} path="*" exact />
             </Switch >
-            <Route component={InexistentRoute} path="*" exact />
         </BrowserRouter  >
     );
 };
