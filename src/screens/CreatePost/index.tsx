@@ -1,7 +1,11 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 import Header from '../../components/Header'
 
 export default function CreatePost() {
+
+    const history = useHistory()
+
     return (
         <>
             <Header />
@@ -15,7 +19,7 @@ export default function CreatePost() {
                 </div>
 
                 <div className='flex gap-2 w-full max-w-[830px] justify-end  '>
-                    <button className='font-bold  mt-5 h-14 rounded-md border-2 bg-blue-500 border-blue-500 text-white text-lg uppercase p-2 px-6 font-title hover:bg-white hover:text-blue-500 hover:border-blue-500 transition-colors'>Cancelar</button>
+                    <button className='font-bold  mt-5 h-14 rounded-md border-2 bg-blue-500 border-blue-500 text-white text-lg uppercase p-2 px-6 font-title hover:bg-white hover:text-blue-500 hover:border-blue-500 transition-colors' onClick={() => history.goBack()}>Cancelar</button>
                     <button className='font-bold  mt-5 h-14 rounded-md border-2 bg-blue-500 border-blue-500 text-white text-lg uppercase p-2 px-6 font-title hover:bg-white hover:text-blue-500 hover:border-blue-500 transition-colors'>Enviar</button>
                 </div>
 

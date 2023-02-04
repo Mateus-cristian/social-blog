@@ -1,8 +1,12 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 import Header from '../../components/Header'
 import Post from '../../components/Post'
 
 export default function Feed() {
+
+    const history = useHistory()
+
     return (
         <div>
             <Header />
@@ -22,7 +26,20 @@ export default function Feed() {
                             </div>
                         </div>
                         <div>
-                            <button className='w-full mt-5 h-14 rounded-md border-2 bg-blue-500 border-blue-500 text-white text-lg uppercase p-2 font-text hover:bg-white hover:text-blue-500 hover:border-white transition-colors'>Criar post</button>
+                            <button className='w-full 
+                            mt-5 h-14 
+                            rounded-md 
+                            border-2 
+                            bg-blue-500 
+                            border-blue-500 
+                            text-white 
+                            text-lg uppercase 
+                            p-2 font-text 
+                            cursor-pointer
+                            hover:bg-white
+                            hover:text-blue-500 
+                            hover:border-white 
+                            transition-colors' onClick={() => history.push('/create-post')}>Criar post</button>
                         </div>
                     </div>
                     <Post />
