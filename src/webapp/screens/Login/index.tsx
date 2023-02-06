@@ -1,5 +1,5 @@
 import React from 'react'
-import cloud from '@/assets/images/cloud.png'
+import cloud from '@/webapp/assets/images/cloud.png'
 
 export default function Login() {
     return (
@@ -30,7 +30,7 @@ export default function Login() {
                                 </div>
                             </div>
                         </div>
-                        <div className={`flex flex-col gap-4 justify-center items-center w-full h-[calc(530px-160px)]`}>
+                        <form className={`flex flex-col gap-4 justify-center items-center w-full h-[calc(530px-160px)]`}>
                             <div className='flex flex-col items-center  w-full max-w-[350px]'>
                                 <label className='flex self-start text-lg  text-white font-title'>Login</label>
                                 <input type='text' className='w-full h-14 rounded-md border-2 border-blue-500 text-blue-500 p-2 font-text' />
@@ -40,9 +40,9 @@ export default function Login() {
                                 <input type="password" className='w-full h-14 rounded-md border-2 border-blue-500 text-blue-500 p-2 font-text' />
                             </div>
                             <div className='flex flex-col items-center  w-full max-w-[350px]'>
-                                <button className='w-full h-14 rounded-md border-2 border-white text-white text-lg uppercase p-2 font-text hover:bg-white hover:text-blue-500 hover:border-blue-500 transition-colors'>Entrar</button>
+                                <button type='submit' className='w-full h-14 rounded-md border-2 border-white text-white text-lg uppercase p-2 font-text hover:bg-white hover:text-blue-500 hover:border-blue-500 transition-colors'>Entrar</button>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
