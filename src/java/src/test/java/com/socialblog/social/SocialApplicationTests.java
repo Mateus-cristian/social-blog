@@ -1,10 +1,10 @@
-package com.socialblog.socialblog;
+package com.socialblog.social;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SocialblogApplicationTests {
+class SocialApplicationTests {
 
 	@Test
 	void contextLoads() {
