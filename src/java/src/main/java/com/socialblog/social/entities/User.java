@@ -1,6 +1,7 @@
 package com.socialblog.social.entities;
 
 import java.io.Serializable;
+import java.util.Optional;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
