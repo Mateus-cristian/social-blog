@@ -42,4 +42,19 @@ public class UserService {
         findById(id);
         userRepository.deleteById(id);
     }
+
+    public User updateUser(User objUser) {
+        try {
+            Optional<User> newObj = userRepository.findById(objUser.getId());
+            updateData(newObj.get(), objUser);
+            return userRepository.save(newObj.get());
+        } catch (RuntimeException e) {
+            throw new ObjectNotFoundException("Erro ao atualizar!");
+        }
+    }
+
+    private void updateData(User newObj, User obj) {
+        newObj.setName(obj.getName());
+        newObj.setEmail(obj.getEmail());
+    }
 }
