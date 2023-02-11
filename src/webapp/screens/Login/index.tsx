@@ -1,7 +1,12 @@
 import React from 'react'
 import cloud from '@/webapp/assets/images/cloud.png'
+import { useHistory } from 'react-router-dom'
 
 export default function Login() {
+
+
+    const history = useHistory();
+
     return (
         <main className='bg-blue-500 h-screen w-full'>
             <div className='flex'>
@@ -41,6 +46,9 @@ export default function Login() {
                             </div>
                             <div className='flex flex-col items-center  w-full max-w-[350px]'>
                                 <button type='submit' className='w-full h-14 rounded-md border-2 border-white text-white text-lg uppercase p-2 font-text hover:bg-white hover:text-blue-500 hover:border-blue-500 transition-colors'>Entrar</button>
+                            </div>
+                            <div>
+                                <a onClick={() => history.push('/create-user')} href="" className='font-title text-white hover:font-semibold  hover:underline hover:rounded-md  transition-all'>Criar usuario</a>
                             </div>
                         </form>
                     </div>

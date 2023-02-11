@@ -7,6 +7,10 @@ const config: IRouteConfig[] = [
     component: lazy(() => import("./Login")),
   },
   {
+    path: "/create-user/",
+    component: lazy(() => import("./CreateUser")),
+  },
+  {
     path: "/create-post/",
     component: lazy(() => import("./CreatePost")),
   },
