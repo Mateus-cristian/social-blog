@@ -18,11 +18,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.socialblog.social.dto.UserDTO;
 import com.socialblog.social.entities.User;
 import com.socialblog.social.services.UserService;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -46,12 +48,18 @@ public class UserResource {
     }
 
     @PostMapping
-    public ResponseEntity<Void> insertUser(@RequestBody UserDTO userDto) {
-        User obj = userService.fromDTO(userDto);
-        obj = userService.insertUser(obj);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-
-        return ResponseEntity.created(uri).build();
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<User> createUser(
+            @RequestParam("name") String name,
+            @RequestParam("password") String password,
+            @RequestParam("image") MultipartFile image) {
+        try {
+            User user = userService.createUser(name, password, image);
+            return new ResponseEntity<>(user, HttpStatus.CREATED);
+        } catch (Error e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @DeleteMapping(value = "/{id}")

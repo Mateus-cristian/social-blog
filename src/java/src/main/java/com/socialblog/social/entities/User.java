@@ -1,7 +1,6 @@
 package com.socialblog.social.entities;
 
 import java.io.Serializable;
-import java.util.Optional;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -15,15 +14,17 @@ public class User implements Serializable {
     private String id;
 
     private String name;
-    private String email;
+    private String password;
+    private String imagePath;
 
     public User() {
     }
 
-    public User(String id, String name, String email) {
+    public User(String id, String name, String password, String imagePath) {
         this.id = id;
         this.name = name;
-        this.email = email;
+        this.password = password;
+        this.imagePath = imagePath;
     }
 
     public String getId() {
@@ -42,12 +43,20 @@ public class User implements Serializable {
         this.name = name;
     }
 
-    public String getEmail() {
-        return email;
+    public String getPassword() {
+        return password;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     @Override

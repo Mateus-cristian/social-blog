@@ -11,6 +11,12 @@ import com.socialblog.social.entities.User;
 import com.socialblog.social.repositories.UserRepository;
 import com.socialblog.social.services.exception.ObjectNotFoundException;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
+
 @Service
 public class UserService {
 
@@ -30,12 +36,28 @@ public class UserService {
         }
     }
 
-    public User insertUser(User obj) {
-        return userRepository.insert(obj);
+    public User createUser(String name, String password, MultipartFile image) {
+        String imagePath = null;
+        if (!image.isEmpty()) {
+            try {
+                imagePath = saveImage(image);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        User user = new User(null, name, password, imagePath);
+        return userRepository.insert(user);
+    }
+
+    private String saveImage(MultipartFile image) throws IOException {
+        String filename = StringUtils.cleanPath(image.getOriginalFilename());
+        File file = new File("src/java/src/main/resources/images/" + filename);
+        Files.write(file.toPath(), image.getBytes());
+        return filename;
     }
 
     public User fromDTO(UserDTO objDto) {
-        return new User(objDto.getId(), objDto.getName(), objDto.getEmail());
+        return new User(null, objDto.getId(), objDto.getName(), objDto.getPassword());
     }
 
     public void deleteUser(String id) {
@@ -55,6 +77,5 @@ public class UserService {
 
     private void updateData(User newObj, User obj) {
         newObj.setName(obj.getName());
-        newObj.setEmail(obj.getEmail());
     }
 }
