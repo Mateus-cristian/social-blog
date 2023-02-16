@@ -1,15 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup';
 import { object, string, mixed, ref } from 'yup'
 import axios from 'axios';
 
+interface User {
+    name: string;
+    password: string;
+
+}
 
 
 const addSchema = object().shape({
     name: string().required('Nome é obrigátorio'),
     password: string().required('Senha é obrigátorio'),
-    image: mixed().required('A imagem é obrigatória'),
     repeatPassword: string().oneOf([ref('password'), ''], 'As senhas estão incorretas')
 });
 
@@ -17,8 +21,25 @@ export default function CreateUser() {
 
     const { control, handleSubmit, setError, watch, formState: { errors } } = useForm({ resolver: yupResolver(addSchema) })
 
+    const [image, setImage] = useState<Blob>()
 
-    const submit = (value: any) => {
+    const handleFileUpload = (event: any) => {
+        const file = event.target.files[0];
+        setImage(file)
+    }
+
+    const submit = (value: User) => {
+        if (image) {
+            console.log("🚀 ~ file: index.tsx:33 ~ submit ~ image", image)
+            const formData = new FormData();
+
+            formData.append('name', value.name);
+            formData.append('password', value.password);
+            formData.append('image', image)
+
+            axios.post('http://localhost:8080/users', formData)
+        }
+
 
     }
 
@@ -51,21 +72,14 @@ export default function CreateUser() {
                         </div>
                         <div className='flex flex-col items-center  w-full max-w-[350px]'>
                             <label className='flex  self-start  text-lg text-white font-title'>Imagem</label>
-                            <Controller
-                                control={control}
-                                name="image"
-                                render={({ field }) => (
-                                    <input type="file"
-                                        onChange={(e) => }
-                                        {...field}
-                                        className='w-full h-14
+                            <input type="file"
+                                accept="image/*"
+                                onChange={(e) => handleFileUpload(e)}
+                                className='w-full h-14
                                         rounded-md border-2
                                       border-blue-500
                                       text-blue-500 p-2 font-text'
-                                    />
-                                )}
                             />
-                            {errors.image && <p className='font-text text-red-500  text-xs self-start'>{errors.image.message ?? ''}</p>}
                         </div>
                         <div className='flex flex-col items-center  w-full max-w-[350px]'>
                             <label className='flex  self-start  text-lg text-white font-title'>Senha</label>
