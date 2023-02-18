@@ -36,6 +36,10 @@ public class UserService {
         }
     }
 
+    public User findUserByNameAndPassword(String name, String password) {
+        return userRepository.findByUsernameAndPassword(name, password);
+    }
+
     public User createUser(String name, String password, MultipartFile image) {
         String imagePath = null;
         if (!image.isEmpty()) {
@@ -57,7 +61,7 @@ public class UserService {
     }
 
     public User fromDTO(UserDTO objDto) {
-        return new User(null, objDto.getId(), objDto.getName(), objDto.getPassword());
+        return new User(null, objDto.getId(), objDto.getUsername(), objDto.getPassword());
     }
 
     public void deleteUser(String id) {
@@ -76,6 +80,6 @@ public class UserService {
     }
 
     private void updateData(User newObj, User obj) {
-        newObj.setName(obj.getName());
+        newObj.setUsername(obj.getUsername());
     }
 }

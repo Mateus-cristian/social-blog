@@ -7,4 +7,7 @@ import com.socialblog.social.entities.User;
 
 @Repository
 public interface UserRepository extends MongoRepository<User, String> {
+
+    User findByUsernameAndPassword(String username, String password);
+
 }

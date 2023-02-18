@@ -1,9 +1,7 @@
 package com.socialblog.social.resources;
 
-import java.io.IOException;
-import java.net.URI;
 import java.util.List;
-
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.socialblog.social.dto.UserDTO;
+import com.socialblog.social.entities.JwtUtils;
 import com.socialblog.social.entities.User;
+import com.socialblog.social.entities.UserLoginRequest;
 import com.socialblog.social.services.UserService;
 
 import org.springframework.http.HttpStatus;
@@ -33,28 +33,51 @@ public class UserResource {
     @Autowired
     UserService userService;
 
+    @Autowired
+    private final JwtUtils jwtUtils = null;
+
+    // the blank field jwtUtils may not have been initialized
     @GetMapping
     public ResponseEntity<List<UserDTO>> findAll() {
         List<User> list = userService.findAll();
-        List<UserDTO> listDto = list.stream().map(x -> new UserDTO(x)).collect(Collectors.toList());
+        List<UserDTO> listDto = list.stream().map(x -> new UserDTO(x.getId(), x.getUsername(), x.getImagePath()))
+                .collect(Collectors.toList());
         return ResponseEntity.ok().body(listDto);
     }
 
     @GetMapping(value = "/{id}")
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<User> findById(@PathVariable String id) {
-        User obj = userService.findById(id);
-        return ResponseEntity.ok().body(obj);
+    public ResponseEntity<UserDTO> findById(@PathVariable String id) {
+        User user = userService.findById(id);
+        if (user != null) {
+            UserDTO userDTO = new UserDTO(user.getId(), user.getUsername(), user.getImagePath());
+            return new ResponseEntity<>(userDTO, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/login")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<UserDTO> findUserByNameAndPassword(@RequestBody UserLoginRequest request) {
+        User user = userService.findUserByNameAndPassword(request.getUsername(), request.getPassword());
+        if (user == null) {
+            return ResponseEntity.notFound().build();
+        }
+        UserDTO userDTO = new UserDTO(user.getId(), user.getUsername(), user.getImagePath());
+        String token = jwtUtils.generateToken(user.getId());
+        userDTO.setToken(token);
+        return ResponseEntity.ok().body(userDTO);
     }
 
     @PostMapping
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<User> createUser(
-            @RequestParam("name") String name,
+            @RequestParam("username") String username,
             @RequestParam("password") String password,
             @RequestParam("image") MultipartFile image) {
         try {
-            User user = userService.createUser(name, password, image);
+            User user = userService.createUser(username, password, image);
             return new ResponseEntity<>(user, HttpStatus.CREATED);
         } catch (Error e) {
             e.printStackTrace();
