@@ -2,23 +2,24 @@ package com.socialblog.social.dto;
 
 import java.io.Serializable;
 
-import com.socialblog.social.entities.User;
-
 public class UserDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private String id;
-    private String name;
+    private String username;
     private String password;
+    private String imagePath;
+
+    private String token;
 
     public UserDTO() {
     }
 
-    public UserDTO(User obj) {
-        id = obj.getId();
-        name = obj.getName();
-        password = obj.getPassword();
+    public UserDTO(String id, String username, String imagePath) {
+        this.id = id;
+        this.username = username;
+        this.imagePath = imagePath;
     }
 
     public String getId() {
@@ -29,12 +30,12 @@ public class UserDTO implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -43,6 +44,22 @@ public class UserDTO implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
 }
