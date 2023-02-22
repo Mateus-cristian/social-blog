@@ -60,14 +60,21 @@ public class UserResource {
     @PostMapping("/login")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<UserDTO> findUserByNameAndPassword(@RequestBody UserLoginRequest request) {
-        User user = userService.findUserByNameAndPassword(request.getUsername(), request.getPassword());
-        if (user == null) {
-            return ResponseEntity.notFound().build();
+        try {
+
+            User user = userService.findUserByNameAndPassword(request.getUsername(), request.getPassword());
+            if (user == null) {
+                return ResponseEntity.notFound().build();
+            }
+            UserDTO userDTO = new UserDTO(user.getId(), user.getUsername(), user.getImagePath());
+            String token = jwtUtils.generateToken(user.getId());
+            userDTO.setToken(token);
+
+            return ResponseEntity.ok().body(userDTO);
+        } catch (Error e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        UserDTO userDTO = new UserDTO(user.getId(), user.getUsername(), user.getImagePath());
-        String token = jwtUtils.generateToken(user.getId());
-        userDTO.setToken(token);
-        return ResponseEntity.ok().body(userDTO);
     }
 
     @PostMapping

@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import Routes from './Routes'
-import Feed from './screens/Feed'
-import Login from './screens/Login'
+import { Toaster } from 'react-hot-toast';
+
+
 
 
 function App() {
@@ -9,6 +10,7 @@ function App() {
 
   return (
     < >
+      <Toaster />
       <Routes />
     </>
   )

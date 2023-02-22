@@ -30,7 +30,7 @@ export default function CreateUser() {
 
     const submit = (value: User) => {
         if (image) {
-            console.log("🚀 ~ file: index.tsx:33 ~ submit ~ image", image)
+
             const formData = new FormData();
 
             formData.append('name', value.name);

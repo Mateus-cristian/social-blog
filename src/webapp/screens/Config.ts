@@ -3,15 +3,15 @@ import { IRouteConfig } from "../Routes/index";
 
 const config: IRouteConfig[] = [
   {
-    path: "/login/",
+    path: "/login",
     component: lazy(() => import("./Login")),
   },
   {
-    path: "/create-user/",
+    path: "/create-user",
     component: lazy(() => import("./CreateUser")),
   },
   {
-    path: "/create-post/",
+    path: "/create-post",
     component: lazy(() => import("./CreatePost")),
   },
   {
